@@ -38,6 +38,7 @@ def detect_private_key(file):
 
     with open(file, 'rb') as f:
         content = f.read()
+        print(content)
         if any(line in content for line in BLACKLIST):
             private_key_files.append(file)
 

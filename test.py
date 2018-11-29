@@ -38,32 +38,13 @@ BLACKLIST = [
     b'BEGIN PGP PRIVATE KEY BLOCK',
 ]
 
-"""
-This function will return a human-readable filesize-string
- like "3.5 MB" for it's given 'num'-parameter.
-From http://stackoverflow.com/questions/1094841
-"""
-def sizeof_fmt(num):
-    for x in ['bytes','KB','MB','GB','TB']:
-        if num < 1024.0:
-            return "%3.1f %s" % (num, x)
-        num /= 1024.0
+file = ["creds/dummy-creds"]
 
-def check_size(file):
-    stat = os.stat(file[3:])
-    if stat.st_size > (max_file_size*1024):
-        print("'"+file_s[3:]+"' is too huge to be commited!",
-            "("+sizeof_fmt(stat.st_size)+")")
-        sys.exit(1)
-
-def detect_private_key(argv=None):
-    parser = argparse.ArgumentParser()
-    parser.add_argument('filenames', nargs='*', help='Filenames to check')
-    args = parser.parse_args(argv)
+def detect_private_key():
 
     private_key_files = []
 
-    for filename in args.filenames:
+    for filename in file:
         with open(filename, 'rb') as f:
             content = f.read()
             if any(line in content for line in BLACKLIST):
@@ -73,34 +54,9 @@ def detect_private_key(argv=None):
         for private_key_file in private_key_files:
             print('Private key found: {}'.format(private_key_file))
             sys.exit(1)
+        
     else:
-        return 0
+        #return 0
+        print ('all ok')
 
-# Now, do the checking:
-try:
-    print("Checking for files bigger then "+sizeof_fmt(max_file_size*1024))
-    text = subprocess.check_output(
-    [git_binary_path, "status", "--porcelain", "-uno"],
-		stderr=subprocess.STDOUT).decode("utf-8")
-    file_list = text.splitlines()
-
-	# Check all files:
-    for file in file_list:
-        check_size(file)
-
-
-
-	# Everything seams to be okay:
-    detect_private_key()
-    print("No badness found")
-    sys.exit(0)
-
-except subprocess.CalledProcessError:
-	# There was a problem calling "git status".
-	print("Oops...")
-	sys.exit(12)
-
-# regexs = {
-#     "AWS Key" =< "['\\\"][a-z0-9\/+]{40}['\\\"]",
-#     "Google Key" =< "['\\\"][a-z0-9_]{39}['\\\"]",
-# }
+detect_private_key()

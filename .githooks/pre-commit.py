@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/bin/python3
 """
 This is a git commit-hook which can be used to check if huge files
  where accidentally added to the staging area and are about to be

@@ -14,7 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-
+git_binary_path = "/usr/bin/git"
 """
 Small delegating Python script to allow multiple hooks in a git repository.
 Usage:
@@ -42,7 +42,7 @@ from logging import getLogger
 from subprocess import Popen, PIPE
 from os import access, listdir, X_OK
 from os.path import isfile, isdir, abspath, normpath, dirname, join, basename
-import argparse
+import argparse, subprocess
 
 GIT_HOOKS = [
     'applypatch-msg',
@@ -87,13 +87,10 @@ def setup_logging():
 
     basicConfig(**logging_kwargs)
 
-
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('filenames', nargs='*', help='Filenames to check')
-    args = parser.parse_args(argv)
-    files = args.filenames
-    print(parser)
+    print(subprocess.check_output([git_binary_path, "status", "--porcelain", "-uno"],stderr=subprocess.STDOUT).decode("utf-8"))
+
+
     """
     Execute subhooks for the assigned hook type.
     """

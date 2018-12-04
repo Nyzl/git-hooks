@@ -124,7 +124,7 @@ def main():
         log.info('Running hook {}...'.format(hook_id))
 
         proc = Popen([h] + argv[0:], stdout=PIPE, stderr=PIPE)
-        print(argv[0])
+        print([h]+argv[0:])
         stdout_raw, stderr_raw = proc.communicate()
 
         stdout = stdout_raw.decode('utf-8').strip()

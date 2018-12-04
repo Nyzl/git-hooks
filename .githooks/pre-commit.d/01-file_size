@@ -45,13 +45,16 @@ def sizeof_fmt(num):
         num /= 1024.0
 
 def main(file):
+    log = getLogger(basename(__file__))
     stat = os.stat(file)
     if stat.st_size > (max_file_size*1024):
         log.info("'"+file_s[3:]+"' is too huge to be commited!",
             "("+sizeof_fmt(stat.st_size)+")")
         return 1
 
-    else: return 0
+    else:
+        log.info("no big files here")
+        return 0
 
 # def  main():
 #     log = getLogger(basename(__file__))

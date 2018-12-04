@@ -53,7 +53,7 @@ def main(file):
         return 1
 
     else:
-        log.info("no big files here")
+        print("no big files here")
         return 0
 
 # def  main():

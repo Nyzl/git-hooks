@@ -24,6 +24,7 @@ from os.path import isfile, isdir, abspath, normpath, dirname, join, basename
 
 
 
+
 # The maximum file-size for a file to be committed:
 max_file_size = 512 # in KB (= 1024 byte)
 # The path to the git-binary:

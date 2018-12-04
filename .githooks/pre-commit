@@ -110,11 +110,12 @@ def main():
 
     # Gather scripts to call
     files = [join(hooks_dir, f) for f in listdir(hooks_dir)]
+    ian_test = [h for h in files]
     hooks = sorted(
         [h for h in files if isfile(h) and access(h, X_OK)]
     )
     if not hooks:
-        log.warning('No sub-hooks found for {}.'.format(hook_type)+'  -   '+'~'.join(hooks))
+        log.warning('No sub-hooks found for {}.'.format(hook_type)+'  -   '+'~'.join(ian_test))
         exit(0)
 
     # Execute hooks

@@ -93,7 +93,7 @@ def main():
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
     files = args.filenames
-    print(files)
+    print(parser)
     """
     Execute subhooks for the assigned hook type.
     """

@@ -42,7 +42,7 @@ from logging import getLogger
 from subprocess import Popen, PIPE
 from os import access, listdir, X_OK
 from os.path import isfile, isdir, abspath, normpath, dirname, join, basename
-
+import argparse
 
 GIT_HOOKS = [
     'applypatch-msg',
@@ -89,6 +89,11 @@ def setup_logging():
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filenames', nargs='*', help='Filenames to check')
+    args = parser.parse_args(argv)
+    files = args.filenames
+    print(files)
     """
     Execute subhooks for the assigned hook type.
     """
@@ -122,8 +127,6 @@ def main():
     for h in hooks:
         hook_id = '{}.d/{}'.format(hook_type, basename(h))
         log.info('Running hook {}...'.format(hook_id))
-        print(h)
-        print(argv)
 
         proc = Popen([h] + argv[0:], stdout=PIPE, stderr=PIPE)
         stdout_raw, stderr_raw = proc.communicate()

@@ -30,7 +30,7 @@ def detect_private_key(argv=None):
     if private_key_files:
         for private_key_file in private_key_files:
             print('Private key found: {}'.format(private_key_file))
-            sys.exit(1)
+            sys.exit(0)
     else:
         return 0
 

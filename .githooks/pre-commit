@@ -115,7 +115,7 @@ def main():
         [h for h in files if isfile(h) and access(h, X_OK)]
     )
     if not hooks:
-        log.warning('No sub-hooks found for {}.'.format(hook_type)+'  -   '+'~'.join(ian_test))
+        log.warning('No sub-hooks found for {}.'.format(hook_type)+'  -   '+'~'+ian_test[0])
         exit(0)
 
     # Execute hooks

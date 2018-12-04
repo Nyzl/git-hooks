@@ -22,7 +22,7 @@ def detect_private_key(argv=None):
     private_key_files = []
 
     for filename in args.filenames:
-        print (filename)
+        print (filename + "HI")
         with open(filename, 'rb') as f:
             content = f.read()
             if any(line in content for bad in BLACKLIST):

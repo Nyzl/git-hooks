@@ -126,7 +126,8 @@ def main():
         proc = Popen([h] + argv[0:], stdout=PIPE, stderr=PIPE)
         stdout_raw, stderr_raw = proc.communicate()
         print([h]+argv[0:])
-        print(stdout_raw+stderr_raw)
+        stdout_raw2 = PIPE
+        print(stdout_raw2)
 
         stdout = stdout_raw.decode('utf-8').strip()
         stderr = stderr_raw.decode('utf-8').strip()

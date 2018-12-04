@@ -1,14 +1,18 @@
 #!/usr/local/bin/python3
 
 import subprocess, sys, os, re, argparse
+from logging import getLogger
+from os.path import isfile, isdir, abspath, normpath, dirname, join, basename
 
 def main():
+    log = getLogger(basename(__file__))
 
     regexs = {
         "AWS Key": "[a-z0-9\/+]{40}",
         "Possible Key": "[a-z0-9_]{39}",
         "Possible Password": "(pass(word)? ?= ?[\"\'\`].*?[\"\'\`])"
     }
+    return 0
 
     #prog = re.compile(pattern)
     #result = prog.match(string)

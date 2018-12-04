@@ -18,11 +18,11 @@ def detect_private_key(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
+    print(args)
 
     private_key_files = []
 
     for filename in args.filenames:
-        print (filename + "HI")
         with open(filename, 'rb') as f:
             content = f.read()
             if any(line in content for bad in BLACKLIST):

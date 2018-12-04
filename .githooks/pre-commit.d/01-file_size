@@ -44,35 +44,38 @@ def sizeof_fmt(num):
             return "%3.1f %s" % (num, x)
         num /= 1024.0
 
-def check_size(file):
-    stat = os.stat(file[3:])
+def main(file):
+    stat = os.stat(file)
     if stat.st_size > (max_file_size*1024):
         log.info("'"+file_s[3:]+"' is too huge to be commited!",
             "("+sizeof_fmt(stat.st_size)+")")
         return 1
 
-def  main():
-    log = getLogger(basename(__file__))
-    # Now, do the checking:
-    try:
-        log.info("Checking for files bigger then "+sizeof_fmt(max_file_size*1024))
-        text = subprocess.check_output(
-        [git_binary_path, "status", "--porcelain", "-uno"],
-    		stderr=subprocess.STDOUT).decode("utf-8")
-        file_list = text.splitlines()
+    else: return 0
 
-    	# Check all files:
-        for file in file_list:
-            check_size(file)
-
-    	# Everything seams to be okay:
-        log.info("No badness found")
-        return 0
-
-    except subprocess.CalledProcessError:
-    	# There was a problem calling "git status".
-    	log.info("Oops...")
-    	return 12
+# def  main():
+#     log = getLogger(basename(__file__))
+#     # Now, do the checking:
+#     try:
+#         log.info("Checking for files bigger then "+sizeof_fmt(max_file_size*1024))
+#         text = subprocess.check_output(
+#         [git_binary_path, "status", "--porcelain", "-uno"],
+#     		stderr=subprocess.STDOUT).decode("utf-8")
+#         file_list = text.splitlines()
+#
+#     	# Check all files:
+#         for file in file_list:
+#             check_size(file)
+#
+#     	# Everything seams to be okay:
+#         log.info("No badness found")
+#         return 0
+#
+#     except subprocess.CalledProcessError:
+#     	# There was a problem calling "git status".
+#     	log.info("Oops...")
+#     	return 12
 
 if __name__ == '__main__':
-    main()
+    file = sys.argv[1]
+    main(file)

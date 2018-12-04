@@ -48,7 +48,7 @@ def main(file):
     log = getLogger(basename(__file__))
     stat = os.stat(file)
     if stat.st_size > (max_file_size*1024):
-        log.info("'"+file_s[3:]+"' is too huge to be commited!",
+        print("'"+file_s[3:]+"' is too huge to be commited!",
             "("+sizeof_fmt(stat.st_size)+")")
         return 1
 

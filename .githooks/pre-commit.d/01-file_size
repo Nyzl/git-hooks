@@ -53,7 +53,7 @@ def main(file):
         return 1
 
     else:
-        print("no big files here")
+        print("no big files here /n")
         return 0
 
 # def  main():

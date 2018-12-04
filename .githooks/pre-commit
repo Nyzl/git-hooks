@@ -115,21 +115,21 @@ def main():
         [h for h in files if isfile(h) and access(h, X_OK)]
     )
     if not hooks:
-        log.warning('No sub-hooks found for {}.'.format(hook_type)+'  -   '+'~'+ian_test[0])
+        log.warning('No sub-hooks found for {}.'.format(hook_type))
         exit(0)
 
     # Execute hooks
     for h in hooks:
         hook_id = '{}.d/{}'.format(hook_type, basename(h))
         log.info('Running hook {}...'.format(hook_id))
+        print(h)
+        print(argv)
 
         proc = Popen([h] + argv[0:], stdout=PIPE, stderr=PIPE)
         stdout_raw, stderr_raw = proc.communicate()
 
         stdout = stdout_raw.decode('utf-8').strip()
         stderr = stderr_raw.decode('utf-8').strip()
-
-        print(stdout)
 
         if stdout:
             log.info(stdout)

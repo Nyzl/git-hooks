@@ -19,6 +19,9 @@ The script was developed and has been confirmed to work under
 """
 
 import subprocess, sys, os, re, argparse
+from logging import getLogger
+from os.path import isfile, isdir, abspath, normpath, dirname, join, basename
+
 
 
 # The maximum file-size for a file to be committed:
@@ -44,14 +47,15 @@ def sizeof_fmt(num):
 def check_size(file):
     stat = os.stat(file[3:])
     if stat.st_size > (max_file_size*1024):
-        print("'"+file_s[3:]+"' is too huge to be commited!",
+        log.info("'"+file_s[3:]+"' is too huge to be commited!",
             "("+sizeof_fmt(stat.st_size)+")")
-        sys.exit(1)
+        return 1
 
 def  main():
+    log = getLogger(basename(__file__))
     # Now, do the checking:
     try:
-        print("Checking for files bigger then "+sizeof_fmt(max_file_size*1024))
+        log.info("Checking for files bigger then "+sizeof_fmt(max_file_size*1024))
         text = subprocess.check_output(
         [git_binary_path, "status", "--porcelain", "-uno"],
     		stderr=subprocess.STDOUT).decode("utf-8")
@@ -62,13 +66,13 @@ def  main():
             check_size(file)
 
     	# Everything seams to be okay:
-        print("No badness found")
-        sys.exit(0)
+        log.info("No badness found")
+        return 0
 
     except subprocess.CalledProcessError:
     	# There was a problem calling "git status".
-    	print("Oops...")
-    	sys.exit(12)
+    	log.info("Oops...")
+    	return 12
 
 if __name__ == '__main__':
     main()

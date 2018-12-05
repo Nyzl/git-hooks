@@ -42,7 +42,7 @@ from logging import getLogger
 from subprocess import Popen, PIPE
 from os import access, listdir, X_OK
 from os.path import isfile, isdir, abspath, normpath, dirname, join, basename
-import argparse, subprocess
+import argparse, subprocess, re
 
 GIT_HOOKS = [
     'applypatch-msg',
@@ -88,7 +88,9 @@ def setup_logging():
     basicConfig(**logging_kwargs)
 
 def main():
-    files = subprocess.check_output([git_binary_path, "status", "--porcelain", "-uno"],stderr=subprocess.STDOUT).decode("utf-8")
+    changefiles_raw = subprocess.check_output([git_binary_path, "status", "--porcelain", "-uno"],stderr=subprocess.STDOUT).decode("utf-8")
+    changefiles = re.findall('\S{3,}', changefiles_raw)
+
 
     #parser = argparse.ArgumentParser(description='Add some files')
     #parser.add_argument('filenames', nargs='*', help='Filenames to check')
@@ -128,7 +130,7 @@ def main():
         hook_id = '{}.d/{}'.format(hook_type, basename(h))
         log.info('Running hook {}...'.format(hook_id))
 
-        proc = Popen([h] + files, stdout=PIPE, stderr=PIPE)
+        proc = Popen([h] + changefiles, stdout=PIPE, stderr=PIPE)
         stdout_raw, stderr_raw = proc.communicate()
 
         stdout = stdout_raw.decode('utf-8').strip()

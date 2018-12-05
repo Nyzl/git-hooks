@@ -15,8 +15,8 @@ BLACKLIST = [
     b'BEGIN PGP PRIVATE KEY BLOCK',
 ]
 
-
 def detect_private_key(argv=None):
+    log = getLogger(basename(__file__))
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)

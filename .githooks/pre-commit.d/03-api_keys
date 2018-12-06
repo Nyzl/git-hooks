@@ -16,7 +16,7 @@ def main():
 
     for file in files:
         with open(file, 'rb') as f:
-            content = f.read()
+            content = str(f.read())
             for regex in regexs:
                 pattern =  regexs[regex]
                 if re.search(pattern,content) is not None:

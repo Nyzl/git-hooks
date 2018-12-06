@@ -10,7 +10,7 @@ def main():
 
     regexs = {
         "AWS Key": "[a-z0-9\/+]{40}",
-        "Possible Key": "[a-z0-9_]{39}",
+        "Possible Key": "[a-z0-9_]{20,}",
         "Possible Password": "(pass(word)? ?= ?[\"\'\`].*?[\"\'\`])"
     }
 

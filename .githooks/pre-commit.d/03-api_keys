@@ -10,7 +10,7 @@ def main():
 
     regexs = {
         "AWS Key": "[a-z0-9\/+]{40}",
-        "Possible Key": "[\"\'\`]\S{20,}[\"\'\`]",
+        "Possible Key": "[\"\'\`][0-9a-zA-Z_]{20,}[\"\'\`]",
         "Possible Password": "(pass(word)? ?= ?[\"\'\`].*?[\"\'\`])"
     }
 
@@ -20,7 +20,7 @@ def main():
             for regex in regexs:
                 pattern =  regexs[regex]
                 if re.search(pattern,content) is not None:
-                    print ("Found "+regex+" in "+file)
+                    print ("Found "+regex+" in "+file+":  "+re.search(pattern,content).group(0))
                     sys.exit(1)
 
     return 0

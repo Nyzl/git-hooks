@@ -15,7 +15,7 @@ BLACKLIST = [
     b'BEGIN PGP PRIVATE KEY BLOCK',
 ]
 
-def detect_private_key(file):
+def detect_private_key(filename):
     log = getLogger(basename(__file__))
 
     private_key_files = []

@@ -90,6 +90,7 @@ def setup_logging():
 def main():
     changefiles_raw = subprocess.check_output([git_binary_path, "status", "--porcelain", "-uno"],stderr=subprocess.STDOUT).decode("utf-8")
     changefiles = re.findall('\S{3,}', changefiles_raw)
+    changetype = {"M": "modified","A":"added"}
 
 
     """
@@ -141,7 +142,6 @@ def main():
         if proc.returncode != 0:
             log.error('Hook {} failed. Aborting...'.format(hook_id))
             exit(proc.returncode)
-
 
 if __name__ == '__main__':
     main()

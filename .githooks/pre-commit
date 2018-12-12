@@ -42,7 +42,8 @@ from logging import getLogger
 from subprocess import Popen, PIPE
 from os import access, listdir, X_OK
 from os.path import isfile, isdir, abspath, normpath, dirname, join, basename
-import subprocess, re
+import subprocess, re, io
+import pandas as pd
 
 GIT_HOOKS = [
     'applypatch-msg',
@@ -89,8 +90,10 @@ def setup_logging():
 
 def main():
     changefiles_raw = subprocess.check_output([git_binary_path, "status", "--porcelain", "-uno"],stderr=subprocess.STDOUT).decode("utf-8")
-    changefiles = re.findall('\S{3,}', changefiles_raw)
-    changetype = {"M": "modified","A":"added"}
+    df = pd.read_csv(io.StringIO(changefiles_raw), sep='\s+', header=None)
+    df = df.rename(index=str, columns={0:"method",1:"file"})
+    df_filter = df.query('method!="D"')
+    changefiles = df_filter['file'].values.tolist()
 
 
     """

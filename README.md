@@ -8,5 +8,7 @@ pre-commit listens to git status for file changes and passes the list of files t
 
 A Makefile makes sure that all hooks are executable and changes the repository default folder for git hooks to .githooks
 
-Currently the script does not work for deleted files and doesn't differentiate between staged and unstaged changes.
+Currently the script doesn't differentiate between staged and unstaged changes.
 And it hates the README file.
+
+use `git commit --no-verify` to commit without checks
